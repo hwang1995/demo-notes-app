@@ -13,7 +13,16 @@ export function StorageStack({ stack, app }) {
   });
 
   // Create an S3 Bucket
-  const bucket = new Bucket(stack, "Uploads");
+  const bucket = new Bucket(stack, "Uploads", {
+    cors: [
+      {
+        maxAge: "1 day",
+        allowedOrigins: ["*"],
+        allowedHeaders: ["*"],
+        allowedMethods: ["GET", "PUT", "POST", "DELETE", "HEAD"],
+      },
+    ],
+  });
 
   return {
     table,
